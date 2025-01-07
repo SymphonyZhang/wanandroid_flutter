@@ -86,6 +86,7 @@ class _HotKeyPageState extends State<HotKeyPage> {
             hotkeyTap: (value) {
               //TODO 搜索热词点击操作
               showToast(value);
+              RouteUtils.pushForNamed(context, RoutePath.webViewPage, arguments: {"name": value ?? ""});
             });
       },
     );
