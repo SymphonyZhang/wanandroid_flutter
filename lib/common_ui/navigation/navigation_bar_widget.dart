@@ -12,7 +12,9 @@ class NavigationBarWidget extends StatefulWidget {
     this.currentIndex,
     this.onTapChange,
   }) {
-    if (pages.length != labels.length || pages.length != defaultIcons.length || pages.length != activeIcons.length) {
+    if (pages.length != labels.length ||
+        pages.length != defaultIcons.length ||
+        pages.length != activeIcons.length) {
       throw Exception("数组长度不一致!");
     }
   }
@@ -25,6 +27,9 @@ class NavigationBarWidget extends StatefulWidget {
 
   // default icons 底部导航栏的默认图标数组 [非选中]
   final List<String> defaultIcons;
+
+  // 导航图标默认缩放为原图标的 0.8 倍
+  final double defaultScale = 0.8;
 
   // active icons 底部导航栏的选中图标数组 [选中]
   final List<String> activeIcons;
@@ -71,8 +76,8 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
         BottomNavigationBarItem(
             icon: Image.asset(
               widget.defaultIcons[i],
-              width: 32.r,
-              height: 32.r,
+              width: widget.defaultScale * 32.r,
+              height: widget.defaultScale * 32.r,
             ),
             label: widget.labels[i],
             activeIcon: NavigationBarItem(builder: (context) {
