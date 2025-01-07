@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:wanandroid_flutter/pages/auth/login_page.dart';
 import 'package:wanandroid_flutter/pages/personal/personal_vm.dart';
@@ -37,9 +38,15 @@ class _PersonalPageState extends State<PersonalPage> {
                 RouteUtils.push(context, LoginPage());
               }
             }),
-            _item('我的收藏', () {}),
-            _item('检查更新', () {}),
-            _item('关于我们', () {}),
+            _item('我的收藏', () {
+              showToast('我的收藏');
+            }),
+            _item('检查更新', () {
+              showToast('检查更新');
+            }),
+            _item('关于我们', () {
+              showToast('关于我们');
+            }),
             Consumer<PersonalViewModel>(builder: (context,vm,child){
               if(vm.shouldLogin){
                 return SizedBox();
