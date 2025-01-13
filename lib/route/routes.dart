@@ -18,19 +18,14 @@ class Routes {
     switch (settings.name) {
       case RoutePath.tab:
         return pageRoute(TabPage(),settings: settings);
-        break;
       case RoutePath.webViewPage:
         return pageRoute(WebViewPage(title: "首页跳转来的"),settings: settings);
-        break;
       case RoutePath.loginPage:
         return pageRoute(LoginPage(),settings: settings);
-        break;
       case RoutePath.registerPage:
         return pageRoute(RegisterPage(),settings: settings);
-        break;
       case RoutePath.detailKnowledgePage:
         return pageRoute(KnowledgeDetailTabPage(),settings: settings);
-        break;
     }
     return pageRoute(Scaffold(
       body: SafeArea(child: Center(child: Text("route path ${settings.name} can not find!"))),

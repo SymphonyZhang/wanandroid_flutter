@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:wanandroid_flutter/repository/datas/auth_data.dart';
 import 'package:wanandroid_flutter/repository/datas/common_website_data.dart';

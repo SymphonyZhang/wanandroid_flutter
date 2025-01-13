@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:wanandroid_flutter/pages/knowledge/detail/knowledge_detail_tab_page.dart';
 import 'package:wanandroid_flutter/pages/knowledge/knowledge_vm.dart';

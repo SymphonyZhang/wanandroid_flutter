@@ -50,7 +50,6 @@ class _TabPageState extends State<TabPage> {
       defaultIcons: defaultIcons,
       activeIcons: activeIcons,
       onTapChange: (index){
-        print("index ===================> $index");
       },
     );
   }

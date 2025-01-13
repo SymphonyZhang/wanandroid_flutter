@@ -28,7 +28,6 @@ class CookieInterceptor extends Interceptor{
       if(list is List){
         for (String? cookie in list) {
           cookieList.add(cookie.toString());
-          print("CookieInterceptor ====================> ${cookie.toString()}");
         }
       }
       SpUtils.saveStringList(Constants.SP_COOKIE_LIST_KEY, cookieList);
