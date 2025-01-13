@@ -4,7 +4,7 @@ import 'package:wanandroid_flutter/repository/datas/home_banner_data.dart';
 import 'package:wanandroid_flutter/repository/datas/home_list_data.dart';
 
 class HomeViewModel with ChangeNotifier {
-  int pageCount = 0;
+  int _pageCount = 0;
   List<BannerItemData>? bannerList;
   List<HomeListItemData>? homeListItemDatas = [];
 
@@ -16,14 +16,14 @@ class HomeViewModel with ChangeNotifier {
 
   /// 初始化列表数据
   Future initListData() async {
-    pageCount = 0;
+    _pageCount = 0;
     await getWendaList();
     await getHomeList();
   }
 
   /// 下拉刷新
   Future refreshDatas() async{
-    pageCount =0;
+    _pageCount =0;
     await getBanner();
     await initListData();
 
@@ -37,11 +37,11 @@ class HomeViewModel with ChangeNotifier {
   /// 获取文章列表
   Future getHomeList({bool loadMore = false}) async {
     if(loadMore){
-      pageCount+=200;
+      _pageCount++;
     }else{
-      pageCount=0;
+      _pageCount=0;
     }
-    List<HomeListItemData>? list= await Api.instance.getHomeList(pageCount);
+    List<HomeListItemData>? list= await Api.instance.getHomeList(_pageCount);
     if(loadMore && list!.isEmpty){
       return;
     }
