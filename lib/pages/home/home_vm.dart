@@ -43,6 +43,7 @@ class HomeViewModel with ChangeNotifier {
     }
     List<HomeListItemData>? list= await Api.instance.getHomeList(_pageCount);
     if(loadMore && list!.isEmpty){
+      _pageCount--;
       return;
     }
     homeListItemDatas?.addAll(list ?? []);
