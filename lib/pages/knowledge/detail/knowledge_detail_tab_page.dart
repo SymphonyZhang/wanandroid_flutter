@@ -20,7 +20,7 @@ class _KnowledgeDetailTabPageState extends State<KnowledgeDetailTabPage> with Si
 
   List<Widget> children(){
     return widget.tabList?.map((element){
-      return KnowledgeTabChildPage();
+      return KnowledgeTabChildPage(cid: "${element.id ?? ""}",);
     }).toList() ?? [];
   }
 

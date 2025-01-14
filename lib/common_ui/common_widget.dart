@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+/// 标题文本15号、黑色
+TextStyle titleTextStyle15 = TextStyle(color: Colors.black,fontSize: 15.sp);
+
+/// 普通字体、只做判空处理
+Widget normalText(String? text){
+  return Text(text ?? "",style: titleTextStyle15,);
+}
+
 /// 通用白色圆角边框按钮
 Widget commonRadiusButton({required String text, GestureTapCallback? onTap}) {
   return GestureDetector(
