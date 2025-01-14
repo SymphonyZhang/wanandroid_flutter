@@ -20,7 +20,7 @@ class KnowledgeDetailListData {
     if (json['datas'] != null) {
       datas = [];
       json['datas'].forEach((v) {
-        datas?.add(KnowledgeDetailData.fromJson(v));
+        datas?.add(KnowledgeDetailItemData.fromJson(v));
       });
     }
     offset = json['offset'];
@@ -30,7 +30,7 @@ class KnowledgeDetailListData {
     total = json['total'];
   }
   num? curPage;
-  List<KnowledgeDetailData>? datas;
+  List<KnowledgeDetailItemData>? datas;
   num? offset;
   bool? over;
   num? pageCount;
@@ -89,8 +89,8 @@ class KnowledgeDetailListData {
 /// visible : 1
 /// zan : 0
 
-class KnowledgeDetailData {
-  KnowledgeDetailData({
+class KnowledgeDetailItemData {
+  KnowledgeDetailItemData({
       this.adminAdd, 
       this.apkLink, 
       this.audit, 
@@ -127,7 +127,7 @@ class KnowledgeDetailData {
       this.visible, 
       this.zan,});
 
-  KnowledgeDetailData.fromJson(dynamic json) {
+  KnowledgeDetailItemData.fromJson(dynamic json) {
     adminAdd = json['adminAdd'];
     apkLink = json['apkLink'];
     audit = json['audit'];

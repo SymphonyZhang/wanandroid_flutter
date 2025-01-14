@@ -93,7 +93,7 @@ class Api {
   }
 
   /// 获取知识体系文章
-  Future<List<KnowledgeDetailData>?> getKnowledgeDetail(int page, String cid) async {
+  Future<List<KnowledgeDetailItemData>?> getKnowledgeDetail(int page, String cid) async {
     //Response response = await DioInstance.instance.get(path: 'article/list/$page/json?cid=$cid');
     Response response = await DioInstance.instance.get(path: 'article/list/$page/json?', params: {"cid": cid});
     KnowledgeDetailListData knowledgeDetailListData = KnowledgeDetailListData.fromJson(response.data);
