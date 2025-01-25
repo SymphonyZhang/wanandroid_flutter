@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wanandroid_flutter/common_ui/common_widget.dart';
@@ -54,7 +55,7 @@ class _KnowledgeTabChildPageState extends State<KnowledgeTabChildPage> {
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   return _item(vm.knowledgeDetailItemList[index],onTap: (){
-
+                      showToast(vm.knowledgeDetailItemList[index].shareUser ?? "I don't know");
                   });
                 },
                 itemCount: vm.knowledgeDetailItemList.length ?? 0,
