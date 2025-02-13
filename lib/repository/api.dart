@@ -4,6 +4,7 @@ import 'package:wanandroid_flutter/repository/datas/common_website_data.dart';
 import 'package:wanandroid_flutter/repository/datas/home_banner_data.dart';
 import 'package:wanandroid_flutter/repository/datas/home_list_data.dart';
 import 'package:wanandroid_flutter/repository/datas/knowledge_list_data.dart';
+import 'package:wanandroid_flutter/repository/datas/search_data.dart';
 import 'package:wanandroid_flutter/repository/datas/search_hot_keys_data.dart';
 
 import '../http/dio_instance.dart';
@@ -98,6 +99,13 @@ class Api {
     Response response = await DioInstance.instance.get(path: 'article/list/$page/json?', params: {"cid": cid});
     KnowledgeDetailListData knowledgeDetailListData = KnowledgeDetailListData.fromJson(response.data);
     return knowledgeDetailListData.datas;
+  }
+
+  /// 搜索数据
+  Future<List<SearchListDatas>?> searchWithKeyWord(int page, String? keyword) async{
+    Response response = await DioInstance.instance.post(path: 'article/query/$page/json',params: {"k":keyword});
+    SearchData searchData = SearchData.fromJson(response.data);
+    return searchData.datas;
   }
 
   bool boolCallback(dynamic data) {

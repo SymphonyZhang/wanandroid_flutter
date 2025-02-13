@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:wanandroid_flutter/pages/hot_key/hot_key_vm.dart';
+import 'package:wanandroid_flutter/pages/search/search_page.dart';
 import 'package:wanandroid_flutter/repository/datas/common_website_data.dart';
 import 'package:wanandroid_flutter/repository/datas/search_hot_keys_data.dart';
 import 'package:wanandroid_flutter/resource/assets.dart';
@@ -38,7 +38,7 @@ class _HotKeyPageState extends State<HotKeyPage> {
               child: Column(
                 children: [
                   // 热词标题
-                  _itemTabBar('搜索热词',iconAsset: R.imagesIconSearch),
+                  _itemTabBar('搜索热词', iconAsset: R.imagesIconSearch),
                   //搜索热词
                   _hotKeyGridView(),
                   // 常用网站列表标题
@@ -69,9 +69,17 @@ class _HotKeyPageState extends State<HotKeyPage> {
       child: (iconAsset != null)
           ? Row(
               children: [
-                Text(name, style: TextStyle(fontSize: 14.sp, color: Colors.black)),
+                Text(name,
+                    style: TextStyle(fontSize: 14.sp, color: Colors.black)),
                 Expanded(child: SizedBox()),
-                Image.asset(R.imagesIconSearch, width: 30.r, height: 30.r),
+                GestureDetector(
+                  onTap: () {
+                    // 无参进入搜索页面
+                    RouteUtils.push(context, const SearchPage());
+                  },
+                  child: Image.asset(R.imagesIconSearch,
+                      width: 30.r, height: 30.r),
+                ),
               ],
             )
           : Text(name, style: TextStyle(fontSize: 14.sp, color: Colors.black)),
@@ -85,8 +93,10 @@ class _HotKeyPageState extends State<HotKeyPage> {
             hotKeyList: viewModel.hotKeyList,
             hotkeyTap: (value) {
               //TODO 搜索热词点击操作
-              showToast(value);
-              RouteUtils.pushForNamed(context, RoutePath.webViewPage, arguments: {"name": value ?? ""});
+              //showToast(value);
+              //RouteUtils.pushForNamed(context, RoutePath.searchPage, arguments: {"name": value ?? ""});
+              // 带参数进入搜索页面
+              RouteUtils.push(context, SearchPage(keyword: value));
             });
       },
     );
@@ -98,13 +108,18 @@ class _HotKeyPageState extends State<HotKeyPage> {
         return _gridView(
             websiteList: viewModel.websiteList,
             websiteTap: (value) {
-              RouteUtils.pushForNamed(context, RoutePath.webViewPage, arguments: {"name": value.name ?? ""});
+              RouteUtils.pushForNamed(context, RoutePath.webViewPage,
+                  arguments: {"name": value.name ?? ""});
             });
       },
     );
   }
 
-  Widget _gridView({List<SearchHotKeysData>? hotKeyList, List<CommonWebsiteData>? websiteList, ValueChanged<String>? hotkeyTap, ValueChanged<WebsiteSimpleInfo>? websiteTap}) {
+  Widget _gridView(
+      {List<SearchHotKeysData>? hotKeyList,
+      List<CommonWebsiteData>? websiteList,
+      ValueChanged<String>? hotkeyTap,
+      ValueChanged<WebsiteSimpleInfo>? websiteTap}) {
     return Container(
       margin: EdgeInsets.only(top: 20.h),
       padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -127,14 +142,20 @@ class _HotKeyPageState extends State<HotKeyPage> {
           if (hotKeyList != null) {
             return _item(hotKeyList[index].name, hotkeyTap: hotkeyTap);
           }
-          return _item(websiteList?[index].name, websiteTap: websiteTap, link: websiteList?[index].link);
+          return _item(websiteList?[index].name,
+              websiteTap: websiteTap, link: websiteList?[index].link);
         },
-        itemCount: hotKeyList == null ? websiteList?.length ?? 0 : hotKeyList.length ?? 0,
+        itemCount: hotKeyList == null
+            ? websiteList?.length ?? 0
+            : hotKeyList.length ?? 0,
       ),
     );
   }
 
-  Widget _item(String? name, {ValueChanged<String>? hotkeyTap, ValueChanged<WebsiteSimpleInfo>? websiteTap, String? link}) {
+  Widget _item(String? name,
+      {ValueChanged<String>? hotkeyTap,
+      ValueChanged<WebsiteSimpleInfo>? websiteTap,
+      String? link}) {
     return GestureDetector(
       onTap: () {
         if (link != null) {

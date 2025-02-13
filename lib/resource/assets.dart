@@ -2,6 +2,7 @@
 class R {
   R._();
 
+  static const String imagesIconBack = 'assets/images/icon_back.png';
   static const String imagesIconHomeGrey = 'assets/images/icon_home_grey.png';
   static const String imagesIconHomeSelected = 'assets/images/icon_home_selected.png';
   static const String imagesIconHotKeyGrey = 'assets/images/icon_hot_key_grey.png';
