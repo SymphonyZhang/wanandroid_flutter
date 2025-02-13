@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:wanandroid_flutter/common_ui/loading.dart';
 import 'package:wanandroid_flutter/common_ui/smart_refresh/smart_refresh_widget.dart';
 import 'package:wanandroid_flutter/pages/home/home_vm.dart';
 import 'package:wanandroid_flutter/repository/datas/home_list_data.dart';
@@ -28,9 +29,17 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    Loading.showLoading();
     viewModel.getBanner();
-    viewModel.initListData();
+    //viewModel.initListData();
+    _initListData();
   }
+
+  void _initListData() async{
+    viewModel.initListData().then((value){
+      Loading.dismissAll();
+    });
+}
 
   /// 上拉加载回调
   void _onLoading() async {
