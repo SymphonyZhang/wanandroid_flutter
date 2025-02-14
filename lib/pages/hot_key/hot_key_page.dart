@@ -7,7 +7,9 @@ import 'package:wanandroid_flutter/repository/datas/common_website_data.dart';
 import 'package:wanandroid_flutter/repository/datas/search_hot_keys_data.dart';
 import 'package:wanandroid_flutter/resource/assets.dart';
 import 'package:wanandroid_flutter/route/route_utils.dart';
-import 'package:wanandroid_flutter/route/routes.dart';
+
+import '../../common_ui/webview_page.dart';
+import '../../common_ui/webview_widget.dart';
 
 class HotKeyPage extends StatefulWidget {
   const HotKeyPage({super.key});
@@ -69,16 +71,14 @@ class _HotKeyPageState extends State<HotKeyPage> {
       child: (iconAsset != null)
           ? Row(
               children: [
-                Text(name,
-                    style: TextStyle(fontSize: 14.sp, color: Colors.black)),
+                Text(name, style: TextStyle(fontSize: 14.sp, color: Colors.black)),
                 Expanded(child: SizedBox()),
                 GestureDetector(
                   onTap: () {
                     // 无参进入搜索页面
                     RouteUtils.push(context, const SearchPage());
                   },
-                  child: Image.asset(R.imagesIconSearch,
-                      width: 30.r, height: 30.r),
+                  child: Image.asset(R.imagesIconSearch, width: 30.r, height: 30.r),
                 ),
               ],
             )
@@ -108,18 +108,22 @@ class _HotKeyPageState extends State<HotKeyPage> {
         return _gridView(
             websiteList: viewModel.websiteList,
             websiteTap: (value) {
-              RouteUtils.pushForNamed(context, RoutePath.webViewPage,
-                  arguments: {"name": value.name ?? ""});
+              //跳转到网页
+              //RouteUtils.pushForNamed(context, RoutePath.webViewPage,arguments: {"name": value.name ?? ""});
+              RouteUtils.push(
+                  context,
+                  WebviewPage(
+                    webViewType: WebViewType.URL,
+                    loadResource: value.link ?? "",
+                    showTitle: true,
+                    title: value.name,
+                  ));
             });
       },
     );
   }
 
-  Widget _gridView(
-      {List<SearchHotKeysData>? hotKeyList,
-      List<CommonWebsiteData>? websiteList,
-      ValueChanged<String>? hotkeyTap,
-      ValueChanged<WebsiteSimpleInfo>? websiteTap}) {
+  Widget _gridView({List<SearchHotKeysData>? hotKeyList, List<CommonWebsiteData>? websiteList, ValueChanged<String>? hotkeyTap, ValueChanged<WebsiteSimpleInfo>? websiteTap}) {
     return Container(
       margin: EdgeInsets.only(top: 20.h),
       padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -142,20 +146,14 @@ class _HotKeyPageState extends State<HotKeyPage> {
           if (hotKeyList != null) {
             return _item(hotKeyList[index].name, hotkeyTap: hotkeyTap);
           }
-          return _item(websiteList?[index].name,
-              websiteTap: websiteTap, link: websiteList?[index].link);
+          return _item(websiteList?[index].name, websiteTap: websiteTap, link: websiteList?[index].link);
         },
-        itemCount: hotKeyList == null
-            ? websiteList?.length ?? 0
-            : hotKeyList.length ?? 0,
+        itemCount: hotKeyList == null ? websiteList?.length ?? 0 : hotKeyList.length ?? 0,
       ),
     );
   }
 
-  Widget _item(String? name,
-      {ValueChanged<String>? hotkeyTap,
-      ValueChanged<WebsiteSimpleInfo>? websiteTap,
-      String? link}) {
+  Widget _item(String? name, {ValueChanged<String>? hotkeyTap, ValueChanged<WebsiteSimpleInfo>? websiteTap, String? link}) {
     return GestureDetector(
       onTap: () {
         if (link != null) {

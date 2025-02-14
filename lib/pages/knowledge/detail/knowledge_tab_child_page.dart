@@ -8,6 +8,10 @@ import 'package:wanandroid_flutter/common_ui/smart_refresh/smart_refresh_widget.
 import 'package:wanandroid_flutter/pages/knowledge/detail/knowledge_detail_vm.dart';
 import 'package:wanandroid_flutter/repository/datas/knowledge_detail_list_data.dart';
 
+import '../../../common_ui/webview_page.dart';
+import '../../../common_ui/webview_widget.dart';
+import '../../../route/route_utils.dart';
+
 class KnowledgeTabChildPage extends StatefulWidget {
   const KnowledgeTabChildPage({super.key, required this.cid});
 
@@ -54,8 +58,17 @@ class _KnowledgeTabChildPageState extends State<KnowledgeTabChildPage> {
               onLoading: _onLoading,
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return _item(vm.knowledgeDetailItemList[index],onTap: (){
-                      showToast(vm.knowledgeDetailItemList[index].shareUser ?? "I don't know");
+                  return _item(vm.knowledgeDetailItemList[index], onTap: () {
+                    //showToast(vm.knowledgeDetailItemList[index].shareUser ?? "I don't know");
+                    RouteUtils.push(
+                        context,
+                        //跳转到网页
+                        WebviewPage(
+                          webViewType: WebViewType.URL,
+                          loadResource: vm.knowledgeDetailItemList[index].link ?? "",
+                          showTitle: true,
+                          title: vm.knowledgeDetailItemList[index].title,
+                        ));
                   });
                 },
                 itemCount: vm.knowledgeDetailItemList.length ?? 0,
@@ -67,29 +80,26 @@ class _KnowledgeTabChildPageState extends State<KnowledgeTabChildPage> {
     );
   }
 
-  Widget _item(KnowledgeDetailItemData item ,{GestureTapCallback? onTap}){
+  Widget _item(KnowledgeDetailItemData item, {GestureTapCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 8.h,horizontal: 15.w),
+        margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 15.w),
         padding: EdgeInsets.all(10.r),
-        decoration: BoxDecoration(border: Border.all(color: Colors.black12,width: 0.5.r)),
+        decoration: BoxDecoration(border: Border.all(color: Colors.black12, width: 0.5.r)),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                normalText("${item.superChapterName}"),
-                Text("${item.niceShareDate}")
-              ],
+              children: [normalText("${item.superChapterName}"), Text("${item.niceShareDate}")],
             ),
-            Text("${item.title}",style: titleTextStyle15,),
+            Text(
+              "${item.title}",
+              style: titleTextStyle15,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                normalText("${item.chapterName}"),
-                Text("${item.shareUser}")
-              ],
+              children: [normalText("${item.chapterName}"), Text("${item.shareUser}")],
             ),
           ],
         ),

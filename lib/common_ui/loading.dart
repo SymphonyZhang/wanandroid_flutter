@@ -9,7 +9,7 @@ class Loading {
   Loading._();
 
   /// 呼出加载圈
-  static Future showLoading() async {
+  static Future showLoading({Duration? duration}) async {
     showToastWidget(
         Container(
           color: Colors.transparent,
@@ -28,7 +28,7 @@ class Loading {
           ),
         ),
         handleTouch: true,
-        duration: const Duration(days: 1));
+        duration: duration ?? const Duration(days:1));
   }
 
   /// 隐藏加载圈

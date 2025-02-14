@@ -7,6 +7,9 @@ import 'package:wanandroid_flutter/pages/search/search_vm.dart';
 import 'package:wanandroid_flutter/resource/assets.dart';
 import 'package:wanandroid_flutter/route/route_utils.dart';
 
+import '../../common_ui/webview_page.dart';
+import '../../common_ui/webview_widget.dart';
+
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key, this.keyword});
 
@@ -63,8 +66,17 @@ class _SearchPageState extends State<SearchPage> {
                   return Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        return _listItem(
-                            vm.searchListDatas[index].title ?? "", () {});
+                        return _listItem(vm.searchListDatas[index].title ?? "", () {
+                          //跳转到网页
+                          RouteUtils.push(
+                              context,
+                              WebviewPage(
+                                webViewType: WebViewType.URL,
+                                loadResource: vm.searchListDatas[index].link ?? "",
+                                showTitle: true,
+                                title: vm.searchListDatas[index].title,
+                              ));
+                        });
                       },
                       itemCount: vm.searchListDatas.length ?? 0,
                     ),
@@ -82,23 +94,16 @@ class _SearchPageState extends State<SearchPage> {
     return GestureDetector(
         onTap: onTap,
         child: Container(
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(width: 1.r, color: Colors.black12))),
+          decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.r, color: Colors.black12))),
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
           child: Html(
             data: title ?? '',
-            style: {
-              'html':Style(fontSize: FontSize(15.sp))
-            },
+            style: {'html': Style(fontSize: FontSize(15.sp))},
           ),
         ));
   }
 
-  Widget _searchBar(
-      {GestureTapCallback? onBack,
-      GestureTapCallback? onCancel,
-      ValueChanged<String>? onSubmitted}) {
+  Widget _searchBar({GestureTapCallback? onBack, GestureTapCallback? onCancel, ValueChanged<String>? onSubmitted}) {
     return Container(
       color: Colors.teal,
       height: 50.h,

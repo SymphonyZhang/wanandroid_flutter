@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wanandroid_flutter/common_ui/loading.dart';
 import 'package:wanandroid_flutter/common_ui/smart_refresh/smart_refresh_widget.dart';
+import 'package:wanandroid_flutter/common_ui/webview_page.dart';
+import 'package:wanandroid_flutter/common_ui/webview_widget.dart';
 import 'package:wanandroid_flutter/pages/home/home_vm.dart';
 import 'package:wanandroid_flutter/repository/datas/home_list_data.dart';
 import 'package:wanandroid_flutter/resource/assets.dart';
@@ -35,11 +37,11 @@ class _HomePageState extends State<HomePage> {
     _initListData();
   }
 
-  void _initListData() async{
-    viewModel.initListData().then((value){
+  void _initListData() async {
+    viewModel.initListData().then((value) {
       Loading.dismissAll();
     });
-}
+  }
 
   /// 上拉加载回调
   void _onLoading() async {
@@ -107,11 +109,24 @@ class _HomePageState extends State<HomePage> {
           pagination: const SwiperPagination(),
           itemCount: vm.bannerList?.length ?? 0,
           itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.all(10.r),
-              child: Image.network(
-                vm.bannerList?[index].imagePath ?? "",
-                fit: BoxFit.contain,
+            return GestureDetector(
+              onTap: () {
+                //跳转到网页
+                RouteUtils.push(
+                    context,
+                    WebviewPage(
+                      webViewType: WebViewType.URL,
+                      loadResource: vm.bannerList?[index]?.url ?? "",
+                      showTitle: true,
+                      title: vm.bannerList?[index]?.title,
+                    ));
+              },
+              child: Container(
+                margin: EdgeInsets.all(10.r),
+                child: Image.network(
+                  vm.bannerList?[index].imagePath ?? "",
+                  fit: BoxFit.contain,
+                ),
               ),
             );
           },
@@ -125,7 +140,16 @@ class _HomePageState extends State<HomePage> {
 
     return InkWell(
         onTap: () {
-          RouteUtils.pushForNamed(context, RoutePath.webViewPage, arguments: {"name": "使用路由传值"});
+          //跳转到网页
+          RouteUtils.push(
+              context,
+              WebviewPage(
+                webViewType: WebViewType.URL,
+                loadResource: item?.link ?? "",
+                showTitle: true,
+                title: item?.title,
+              ));
+          //RouteUtils.pushForNamed(context, RoutePath.webViewPage, arguments: {"name": "使用路由传值"});
         },
         child: Container(
             margin: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 10.w, right: 10.w),
