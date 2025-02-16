@@ -5,6 +5,7 @@ import 'package:wanandroid_flutter/common_ui/webview_widget.dart';
 import 'package:wanandroid_flutter/pages/auth/login_page.dart';
 import 'package:wanandroid_flutter/pages/auth/register_page.dart';
 import 'package:wanandroid_flutter/pages/knowledge/detail/knowledge_detail_tab_page.dart';
+import 'package:wanandroid_flutter/pages/my_collects/my_collects_page.dart';
 import 'package:wanandroid_flutter/pages/search/search_page.dart';
 import 'package:wanandroid_flutter/pages/tab_page.dart';
 
@@ -29,6 +30,8 @@ class Routes {
         return pageRoute(KnowledgeDetailTabPage(), settings: settings);
       case RoutePath.searchPage:
         return pageRoute(SearchPage(), settings: settings);
+      case RoutePath.myCollectsPage:
+        return pageRoute(MyCollectsPage(),settings: settings);
     }
     return pageRoute(Scaffold(
       body: SafeArea(child: Center(child: Text("route path ${settings.name} can not find!"))),
@@ -72,4 +75,7 @@ class RoutePath {
 
   // 搜索页
   static const String searchPage = "/search_page";
+
+  //收藏页
+  static const String myCollectsPage="/my_collects_page";
 }

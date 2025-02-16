@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:wanandroid_flutter/pages/auth/login_page.dart';
+import 'package:wanandroid_flutter/pages/my_collects/my_collects_page.dart';
 import 'package:wanandroid_flutter/pages/personal/personal_vm.dart';
 import 'package:wanandroid_flutter/resource/assets.dart';
 import 'package:wanandroid_flutter/route/route_utils.dart';
@@ -39,7 +40,8 @@ class _PersonalPageState extends State<PersonalPage> {
               }
             }),
             _item('我的收藏', () {
-              showToast('我的收藏');
+              //showToast('我的收藏');
+              RouteUtils.push(context,MyCollectsPage());
             }),
             _item('检查更新', () {
               showToast('检查更新');

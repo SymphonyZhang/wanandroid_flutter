@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../resource/assets.dart';
+
 /// 标题文本15号、黑色
 TextStyle titleTextStyle15 = TextStyle(color: Colors.black,fontSize: 15.sp);
 
@@ -51,4 +53,14 @@ Widget commonInputTextField({String? labelText, TextEditingController? controlle
       ),
     ),
   );
+}
+
+Widget collectImage(bool? collect,{double? width,double? height,GestureTapCallback? onTap}){
+  return GestureDetector(
+      onTap: onTap,
+      child: Image.asset(
+        (collect ?? false) ? R.imagesImgCollect : R.imagesImgCollectGrey,
+        width: width ?? 25.r,
+        height: height ?? 25.r,
+      ));
 }

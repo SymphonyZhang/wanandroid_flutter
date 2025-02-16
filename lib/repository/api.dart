@@ -4,6 +4,7 @@ import 'package:wanandroid_flutter/repository/datas/common_website_data.dart';
 import 'package:wanandroid_flutter/repository/datas/home_banner_data.dart';
 import 'package:wanandroid_flutter/repository/datas/home_list_data.dart';
 import 'package:wanandroid_flutter/repository/datas/knowledge_list_data.dart';
+import 'package:wanandroid_flutter/repository/datas/my_collects_data.dart';
 import 'package:wanandroid_flutter/repository/datas/search_data.dart';
 import 'package:wanandroid_flutter/repository/datas/search_hot_keys_data.dart';
 
@@ -106,6 +107,19 @@ class Api {
     Response response = await DioInstance.instance.post(path: 'article/query/$page/json',params: {"k":keyword});
     SearchData searchData = SearchData.fromJson(response.data);
     return searchData.datas;
+  }
+
+  //https://www.wanandroid.com/lg/collect/list/0/json
+  Future<List<MyCollectItemData>?> getCollectsList(int page) async{
+    Response response = await DioInstance.instance.get(path: 'lg/collect/list/$page/json');
+    MyCollectsListData myCollectsListData = MyCollectsListData.fromJson(response.data);
+    return myCollectsListData.datas;
+  }
+
+  /// 在收藏页中根据[id]和[originId]取消收藏文章
+  Future<bool?> unCollectWithOriginId(String? id,String? originId) async {
+    Response response = await DioInstance.instance.post(path: 'lg//uncollect/$id/json',params: {"originId":originId ?? -1});
+    return boolCallback(response.data);
   }
 
   bool boolCallback(dynamic data) {

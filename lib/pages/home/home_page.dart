@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:wanandroid_flutter/common_ui/common_widget.dart';
 import 'package:wanandroid_flutter/common_ui/loading.dart';
 import 'package:wanandroid_flutter/common_ui/smart_refresh/smart_refresh_widget.dart';
 import 'package:wanandroid_flutter/common_ui/webview_page.dart';
@@ -11,7 +12,6 @@ import 'package:wanandroid_flutter/pages/home/home_vm.dart';
 import 'package:wanandroid_flutter/repository/datas/home_list_data.dart';
 import 'package:wanandroid_flutter/resource/assets.dart';
 import 'package:wanandroid_flutter/route/route_utils.dart';
-import 'package:wanandroid_flutter/route/routes.dart';
 
 /// @Author          : Symphony
 /// @Email           : 95200261@qq.com
@@ -222,20 +222,9 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(color: Colors.green, fontSize: 12.sp),
                     ),
                     Expanded(child: SizedBox()),
-                    GestureDetector(
-                        onTap: () {
-                          /*if (item?.collect == true) {
-                            viewModel.collect("${item?.id}", index);
-                          } else {
-                            viewModel.uncollect("${item?.id}", index);
-                          }*/
-                          viewModel.collect("${item?.id}", index);
-                        },
-                        child: Image.asset(
-                          (item?.collect ?? false) ? R.imagesImgCollect : R.imagesImgCollectGrey,
-                          width: 30.r,
-                          height: 30.r,
-                        )),
+                    collectImage(item?.collect,width: 30.r,height: 30.r,onTap: (){
+                      viewModel.collect("${item?.id}", index);
+                    }),
                   ],
                 ),
               ],
